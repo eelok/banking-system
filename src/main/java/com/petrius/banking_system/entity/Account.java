@@ -3,14 +3,12 @@ package com.petrius.banking_system.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Data
@@ -32,6 +30,11 @@ public class Account {
     BigDecimal balance;
     BigDecimal withdrawPerDayLimit;
 
-    @OneToMany(mappedBy = "account")
-    List<Transfer> transferList;
+//    // Alle Transfers wo ICH der Sender bin
+//    @OneToMany(mappedBy = "senderAccount")
+//    List<Transfer> outgoingTransfers;
+//
+//    // Alle Transfers wo ICH der Empfänger bin
+//    @OneToMany(mappedBy = "recipientAccount")
+//    List<Transfer> incomingTransfers;
 }

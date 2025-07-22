@@ -24,7 +24,11 @@ public class Transfer {
     Status status;
 
     @ManyToOne
-    @JoinColumn(name= "accountId")
-    Account account;
+    @JoinColumn(name= "senderAccountId")
+    Account senderAccount;
+
+    @ManyToOne
+    @JoinColumn(name = "recipientAccountId")
+    Account recipientAccount;
 
 }
