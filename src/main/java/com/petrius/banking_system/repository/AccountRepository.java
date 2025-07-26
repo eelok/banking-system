@@ -64,4 +64,8 @@ public class AccountRepository {
                 .max()
                 .orElse(0L) +1;
     }
+
+    public boolean isIbanExists(String iban){
+        return this.accounts.stream().anyMatch(account -> account.getIban().equals(iban));
+    }
 }

@@ -42,9 +42,11 @@ public class AccountService implements IAccountService{
 
     public ResponseAccount create(RequestAccount requestAccount){
         Account account = accountMapper.mapToAccount(requestAccount);
+        if(accountRepository.isIbanExists(requestAccount.getIban())){
+            throw new AccountExistsException("Account with IBAN " + requestAccount.getIban() + " already exists");
+        }
         if(account.getId() != null){
-            this.accountRepository.getById(account.getId());
-            throw new AccountExistsException("Account is already exists");
+            throw new IllegalArgumentException("Id must not be provided for new account");
         }
         Account savedAccount = this.accountRepository.save(account);
         return accountMapper.mapToresponseAccount(savedAccount);
