@@ -1,7 +1,9 @@
 package com.petrius.banking_system.service;
 
+import com.petrius.banking_system.domain.RequestAccount;
 import com.petrius.banking_system.domain.ResponseAccount;
 import com.petrius.banking_system.entity.Account;
+import com.petrius.banking_system.exception.AccountExistsException;
 import com.petrius.banking_system.exception.AccountNotFoundException;
 import com.petrius.banking_system.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,17 @@ public class AccountService implements IAccountService{
     }
 
 
-
+    public ResponseAccount create(RequestAccount requestAccount){
+        Account account = accountMapper.mapToAccount(requestAccount);
+        if(account.getId() != null){
+            this.accountRepository.getById(account.getId());
+            throw new AccountExistsException("Account is already exists");
+        }
+        Account savedAccount = this.accountRepository.save(account);
+        return accountMapper.mapToresponseAccount(savedAccount);
+    }
 
 
 }
+
+

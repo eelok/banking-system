@@ -1,12 +1,12 @@
 package com.petrius.banking_system.controller;
 
+import com.petrius.banking_system.domain.RequestAccount;
 import com.petrius.banking_system.domain.ResponseAccount;
 import com.petrius.banking_system.service.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,11 +24,11 @@ public class AccountController {
     }
 
 
-//    @PostMapping("api/v1/accounts")
-//    public ResponseEntity<ResponseAccount> createAccount(@Valid @RequestBody RequestAccount requestAccount){
-//        ResponseAccount createAccount = this.accountService.createAccount(requestAccount);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(createAccount);
-//    }
+    @PostMapping("api/v1/accounts")
+    public ResponseEntity<ResponseAccount> createAccount(@Valid @RequestBody RequestAccount requestAccount){
+        ResponseAccount createAccount = this.accountService.create(requestAccount);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createAccount);
+    }
 
     @GetMapping("/api/v1/accounts/{id}")
     public ResponseEntity<ResponseAccount> getAccount(@PathVariable Long id){

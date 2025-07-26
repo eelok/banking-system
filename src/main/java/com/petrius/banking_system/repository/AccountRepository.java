@@ -47,4 +47,21 @@ public class AccountRepository {
                 .filter(account -> account.getId().equals(id))
                 .findFirst();
     }
+
+    public Account save(Account account){
+        if(account.getId() == null){
+            account.setId(generateNextId());
+        }
+
+        this.accounts.add(account);
+        return  account;
+    }
+
+    private Long generateNextId(){
+        return accountList()
+                .stream()
+                .mapToLong(Account::getId)
+                .max()
+                .orElse(0L) +1;
+    }
 }
