@@ -1,5 +1,6 @@
 package com.petrius.banking_system.domain;
 
+import com.petrius.banking_system.schared.Currency;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ public class ResponseAccount {
     Long id;
     String fullName;
     String iban;
-    String currency;
+    Currency currency;
     BigDecimal balance;
     BigDecimal withdrawPerDayLimit;
 }

@@ -1,5 +1,6 @@
 package com.petrius.banking_system.domain;
 
+import com.petrius.banking_system.schared.Currency;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +21,7 @@ public class RequestAccount {
     String fullName;
     @NotBlank(message = "IBAN is required")
     String iban;
-    String currency;
+    Currency currency;
 
     @NotNull(message = "Balance is required")
     @DecimalMin(value = "0.0", message = "Balance can not be negative ")

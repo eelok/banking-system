@@ -1,6 +1,7 @@
 package com.petrius.banking_system.repository;
 
 import com.petrius.banking_system.entity.Account;
+import com.petrius.banking_system.schared.Currency;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ public class AccountRepository {
                         .id(1L)
                         .fullName("Maria Petri")
                         .iban("DE2345600012")
-                        .currency("EURO")
+                        .currency(Currency.EURO)
                         .balance(new BigDecimal("1000"))
                         .withdrawPerDayLimit(new BigDecimal("2000"))
                         .build()
@@ -29,7 +30,7 @@ public class AccountRepository {
                         .id(2L)
                         .fullName("John Doe")
                         .iban("DE1122334455")
-                        .currency("EURO")
+                        .currency(Currency.CHF)
                         .balance(new BigDecimal("500"))
                         .withdrawPerDayLimit(new BigDecimal("1000"))
                         .build()

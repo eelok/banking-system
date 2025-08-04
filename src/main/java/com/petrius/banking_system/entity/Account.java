@@ -1,5 +1,6 @@
 package com.petrius.banking_system.entity;
 
+import com.petrius.banking_system.schared.Currency;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -26,7 +27,7 @@ public class Account {
     Long id;
     String fullName;
     String iban;
-    String currency;
+    Currency currency;
     BigDecimal balance;
     BigDecimal withdrawPerDayLimit;
 
