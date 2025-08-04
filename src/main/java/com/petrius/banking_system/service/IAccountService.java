@@ -1,6 +1,6 @@
 package com.petrius.banking_system.service;
 
-import com.petrius.banking_system.domain.RequestAccount;
+import com.petrius.banking_system.domain.RequestCreateAccount;
 import com.petrius.banking_system.domain.ResponseAccount;
 
 import java.util.List;
@@ -12,6 +12,6 @@ public interface IAccountService {
 
     List<ResponseAccount> getAll();
 
-    ResponseAccount create(RequestAccount requestAccount);
+    ResponseAccount create(RequestCreateAccount requestCreateAccount);
 
 }

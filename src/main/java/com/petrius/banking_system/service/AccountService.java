@@ -1,25 +1,29 @@
 package com.petrius.banking_system.service;
 
-import com.petrius.banking_system.domain.RequestAccount;
+import com.petrius.banking_system.domain.RequestCreateAccount;
 import com.petrius.banking_system.domain.ResponseAccount;
 import com.petrius.banking_system.entity.Account;
-import com.petrius.banking_system.exception.AccountExistsException;
 import com.petrius.banking_system.exception.AccountNotFoundException;
 import com.petrius.banking_system.repository.AccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AccountService implements IAccountService{
 
-    @Autowired
-    protected AccountRepository accountRepository;
-    @Autowired
-    private AccountMapper accountMapper;
 
+    private final AccountRepository accountRepository;
+    private final AccountMapper accountMapper;
+    private final IbanGenerator ibanGenerator;
+
+    public AccountService(AccountRepository accountRepository, AccountMapper accountMapper, IbanGenerator ibanGenerator) {
+        this.accountRepository = accountRepository;
+        this.accountMapper = accountMapper;
+        this.ibanGenerator = ibanGenerator;
+    }
 
     @Override
     public ResponseAccount getById(Long id) {
@@ -40,14 +44,19 @@ public class AccountService implements IAccountService{
     }
 
 
-    public ResponseAccount create(RequestAccount requestAccount){
-        Account account = accountMapper.mapToAccount(requestAccount);
-        if(accountRepository.isIbanExists(requestAccount.getIban())){
-            throw new AccountExistsException("Account with IBAN " + requestAccount.getIban() + " already exists");
+    public ResponseAccount create(RequestCreateAccount requestCreateAccount){
+        String iban = ibanGenerator.generateIban();
+        while (accountRepository.isIbanExists(iban)){
+            iban = ibanGenerator.generateIban();
         }
-        if(account.getId() != null){
-            throw new IllegalArgumentException("Id must not be provided for new account");
-        }
+        Account account = Account.builder()
+                .fullName(requestCreateAccount.getFullName())
+                .iban(iban)
+                .currency(requestCreateAccount.getCurrency())
+                .balance(new BigDecimal(0))
+                .withdrawPerDayLimit(new BigDecimal(2000))
+                .build();
+
         Account savedAccount = this.accountRepository.save(account);
         return accountMapper.mapToresponseAccount(savedAccount);
     }

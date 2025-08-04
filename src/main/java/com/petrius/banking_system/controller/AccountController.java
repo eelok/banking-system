@@ -1,6 +1,6 @@
 package com.petrius.banking_system.controller;
 
-import com.petrius.banking_system.domain.RequestAccount;
+import com.petrius.banking_system.domain.RequestCreateAccount;
 import com.petrius.banking_system.domain.ResponseAccount;
 import com.petrius.banking_system.service.AccountService;
 import jakarta.validation.Valid;
@@ -25,8 +25,8 @@ public class AccountController {
 
 
     @PostMapping("api/v1/accounts")
-    public ResponseEntity<ResponseAccount> createAccount(@Valid @RequestBody RequestAccount requestAccount){
-        ResponseAccount createAccount = this.accountService.create(requestAccount);
+    public ResponseEntity<ResponseAccount> createAccount(@Valid @RequestBody RequestCreateAccount requestCreateAccount){
+        ResponseAccount createAccount = this.accountService.create(requestCreateAccount);
         return ResponseEntity.status(HttpStatus.CREATED).body(createAccount);
     }
 
