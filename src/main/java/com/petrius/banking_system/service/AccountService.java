@@ -54,7 +54,7 @@ public class AccountService implements IAccountService{
                 .iban(iban)
                 .currency(requestCreateAccount.getCurrency())
                 .balance(new BigDecimal(0))
-                .withdrawPerDayLimit(new BigDecimal(2000))
+                .withdrawPerDayLimit(new BigDecimal(0))
                 .build();
 
         Account savedAccount = this.accountRepository.save(account);
