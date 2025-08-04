@@ -5,37 +5,39 @@ import com.petrius.banking_system.schared.Currency;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class AccountRepository {
 
-    private ArrayList<Account> accounts = new ArrayList<>();
+    private final ArrayList<Account> accounts = new ArrayList<>();
+    private final Set<String> ibans = new HashSet<>();
 
     public AccountRepository(ArrayList<Account> accounts) {
-        this.accounts.add(
-                Account.builder()
-                        .id(1L)
-                        .fullName("Maria Petri")
-                        .iban("DE2345600012")
-                        .currency(Currency.EURO)
-                        .balance(new BigDecimal("1000"))
-                        .withdrawPerDayLimit(new BigDecimal("2000"))
-                        .build()
-        );
-        this.accounts.add(
-                Account.builder()
-                        .id(2L)
-                        .fullName("John Doe")
-                        .iban("DE1122334455")
-                        .currency(Currency.CHF)
-                        .balance(new BigDecimal("500"))
-                        .withdrawPerDayLimit(new BigDecimal("1000"))
-                        .build()
-        );
 
+        Account account1 = Account.builder()
+                .id(1L)
+                .fullName("Maria Petri")
+                .iban("DE2345600012")
+                .currency(Currency.EURO)
+                .balance(new BigDecimal("1000"))
+                .withdrawPerDayLimit(new BigDecimal("2000"))
+                .build();
+
+        this.ibans.add(account1.getIban());
+        this.accounts.add(account1);
+
+        Account account2 = Account.builder()
+                .id(2L)
+                .fullName("John Doe")
+                .iban("DE1122334455")
+                .currency(Currency.CHF)
+                .balance(new BigDecimal("500"))
+                .withdrawPerDayLimit(new BigDecimal("1000"))
+                .build();
+        this.ibans.add(account2.getIban());
+
+        this.accounts.add(account2);
     }
 
     public List<Account> accountList(){
@@ -55,7 +57,7 @@ public class AccountRepository {
         }
 
         this.accounts.add(account);
-        return  account;
+        return account;
     }
 
     private Long generateNextId(){
@@ -68,6 +70,6 @@ public class AccountRepository {
     }
 
     public boolean isIbanExists(String iban){
-        return this.accounts.stream().anyMatch(account -> account.getIban().equals(iban));
+        return this.ibans.contains(iban);
     }
 }
