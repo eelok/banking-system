@@ -58,11 +58,12 @@ public class AccountRepository {
     }
 
     private Long generateNextId(){
-        return accountList()
+        Long result = accountList()
                 .stream()
                 .mapToLong(Account::getId)
                 .max()
-                .orElse(0L) +1;
+                .orElse(0L) + 1;
+        return result;
     }
 
     public boolean isIbanExists(String iban){
